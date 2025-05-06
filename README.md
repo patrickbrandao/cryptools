@@ -1,5 +1,5 @@
 
-# Container para processamento de criptografia por API HTTP
+# Container para geração de chaves por API HTTP
 
 - Gerar chaves privadas (e respectiva chave publica):
 	DH
@@ -90,7 +90,7 @@ sh test.sh
 ## Procedimentos para desenvolvimento do zero
 
 ```
-# Container de base inicial:
+# Criar container limpo:
 docker rm -f api-test
 docker run -d --restart=always \
     --name api-test -h api-test.intranet.br \
