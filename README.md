@@ -49,6 +49,40 @@
 
 ```
 
+# Baixar fontes:
+cd /usr/local/src/
+wget https://github.com/patrickbrandao/cryptools/archive/refs/heads/main.zip -O cryptools.zip
+
+# Extrair (requer: apt-get -y install unzip ):
+unzip cryptools.zip
+
+# Entrar no diretorio dos fontes:
+cd cryptools-main
+
+# Construir imagem do container:
+sh build.sh
+
+# Criar rede docker para containers publicos:
+docker network create \
+    -d bridge \
+   \
+    -o "com.docker.network.bridge.name"="br-net-public" \
+    -o "com.docker.network.bridge.enable_icc"="true" \
+    -o "com.docker.network.driver.mtu"="65495" \
+   \
+    --subnet 10.111.0.0/16 --gateway 10.111.255.254 \
+    --ipv6 \
+    --subnet=2001:db8:10:111::/64 \
+    --gateway=2001:db8:10:111::ffff \
+    \
+    network_public
+
+# Rodar container (detalhes no script run.sh):
+sh run.sh
+
+# Testar APIs:
+sh test.sh
+
 ```
 
 
