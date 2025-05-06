@@ -34,6 +34,7 @@ Serviço para prover endpoints para uso em API
 
 Servidor HTTP, porta padrão e variável de ambiente para modificar porta:
 
+```
 /app/api-rsa.py           - porta padrao HTTP 9001 - PORT_API_RSA
 /app/api-wireguard.py     - porta padrao HTTP 9002 - PORT_API_WIREGUARD
 /app/api-uuid.py          - porta padrao HTTP 9011 - PORT_API_UUID
@@ -43,7 +44,7 @@ Servidor HTTP, porta padrão e variável de ambiente para modificar porta:
 /app/api-hash.py          - porta padrao HTTP 9031 - PORT_API_HASH
 
 Porta HTTP 80 faz proxy para todas as demais portas especificas
-
+```
 
 ## Instalando - Construindo imagem localmente
 
