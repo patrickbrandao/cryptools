@@ -59,7 +59,7 @@
 		echo '    "mod_proxy"';
 		echo ')';
 		echo;
-		echo 'include "mime-types.conf"';
+		echo '#include "mime-types.conf"';
 		echo;
 		echo 'server.username      = "lighttpd"';
 		echo 'server.groupname     = "lighttpd"';
