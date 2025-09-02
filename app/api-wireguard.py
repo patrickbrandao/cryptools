@@ -148,6 +148,52 @@ def api_wireguard_psk():
     
     return jsonify(response)
 
+
+@app.route('/wireguard/pubkey', methods=['GET', 'POST'])
+@app.route('/cryptools/wireguard/pubkey', methods=['GET', 'POST'])
+def api_wireguard_pubkey():
+    """
+    Endpoint para gerar chave pública a partir de uma chave privada WireGuard.
+    Recebe uma chave privada via GET ou POST e gera a respectiva chave pública.
+    
+    Args (via parâmetros):
+        privkey (str): Chave privada WireGuard
+        
+    Returns:
+        Response: JSON contendo timestamp, privkey fornecida e pubkey gerada
+                 Se houver erro na geração, pubkey será uma string vazia
+    """
+    current_timestamp = int(time.time())
+    
+    # Obter a chave privada dos parâmetros (GET ou POST)
+    if request.method == 'GET':
+        privkey = request.args.get('privkey', '')
+    else:  # POST
+        if request.is_json:
+            privkey = request.json.get('privkey', '') if request.json else ''
+        else:
+            privkey = request.form.get('privkey', '')
+    
+    # Inicializar resposta com chave pública vazia
+    pubkey = ""
+    
+    # Tentar gerar a chave pública se a chave privada foi fornecida
+    if privkey.strip():
+        try:
+            # Gerar chave pública a partir da chave privada
+            pubkey = execute_command(['wg', 'pubkey'], privkey.encode('utf-8'))
+        except Exception:
+            # Se houver qualquer erro na geração, pubkey permanece como string vazia
+            pubkey = ""
+    
+    response = {
+        "timestamp": current_timestamp,
+        "privkey": privkey,
+        "pubkey": pubkey
+    }
+    
+    return jsonify(response)
+
 if __name__ == '__main__':
     print(f"Iniciando API WireGuard na porta {PORT}")
     app.run(host='0.0.0.0', port=PORT, threaded=True)
